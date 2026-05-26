@@ -25,13 +25,10 @@
             font-family: "Poppins", sans-serif;
 
             background:
-                linear-gradient(rgba(0, 0, 0, 0.75),
-                    rgba(0, 0, 0, 0.9)),
-                url("https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&auto=format&fit=crop");
+                url("./background.jpg");
 
             background-size: cover;
             background-position: center;
-
             min-height: 100vh;
 
             display: flex;
@@ -76,7 +73,7 @@
 
             background: linear-gradient(90deg,
                     #ffffff,
-                    #9f7aea,
+                    #24FCD1,
                     #00d4ff);
 
             -webkit-background-clip: text;
@@ -270,8 +267,10 @@
             height: 570px;
 
             overflow-y: auto;
+        }
 
-            white-space: pre-wrap;
+        .result p {
+            white-space: normal;
         }
 
         .result::-webkit-scrollbar {
@@ -325,6 +324,12 @@
             .container {
                 padding: 20px;
             }
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
     </style>
 </head>
@@ -659,13 +664,12 @@
 
                 <div style="
                     display:flex;
-                    justify-content:space-between;
                     align-items:center;
-                    gap:15px;
-                    flex-wrap:wrap;
+                    justify-content:flex-start;
+                    gap:16px;
                 ">
 
-                    <div>
+                    <div style="flex:1; min-width:220px;">
 
                         <h4 style="
                             color:white;
@@ -703,6 +707,8 @@
                             text-decoration:none;
 
                             font-weight:600;
+
+                            white-space:nowrap;
                         "
                     >
                         Ver Produto
