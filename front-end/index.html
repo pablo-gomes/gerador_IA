@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DripAI 🔥</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.75),
+                    rgba(0, 0, 0, 0.9)),
+                url("https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            color: white;
+        }
+
+        .container {
+
+            width: 100%;
+            max-width: 1300px;
+
+            background: rgba(15, 15, 15, 0.85);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(14px);
+
+            border-radius: 30px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 0 40px rgba(0, 0, 0, 0.5);
+
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+
+            font-family: "Orbitron", sans-serif;
+
+            font-size: 70px;
+
+            background: linear-gradient(90deg,
+                    #ffffff,
+                    #9f7aea,
+                    #00d4ff);
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #bdbdbd;
+            font-size: 15px;
+        }
+
+        /* TABS */
+
+        .tabs {
+
+            display: flex;
+            gap: 15px;
+
+            margin-bottom: 35px;
+        }
+
+        .tab {
+
+            flex: 1;
+
+            border: none;
+
+            padding: 16px;
+
+            border-radius: 16px;
+
+            background: #1f1f1f;
+
+            color: #d8d8d8;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            font-size: 15px;
+        }
+
+        .tab:hover {
+
+            transform: translateY(-2px);
+
+            background: #2b2b2b;
+        }
+
+        .tab.active {
+
+            background: linear-gradient(135deg,
+                    #6c63ff,
+                    #00d4ff);
+
+            color: white;
+
+            box-shadow:
+                0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* CONTENT */
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+        }
+
+        /* CARD */
+
+        .card {
+
+            background: #171717;
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+
+            border-radius: 22px;
+
+            padding: 25px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* INPUTS */
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            background: #111;
+
+            border: 1px solid #2b2b2b;
+
+            border-radius: 14px;
+
+            padding: 16px;
+
+            color: white;
+
+            margin-bottom: 15px;
+
+            outline: none;
+
+            transition: 0.3s;
+
+            font-family: "Poppins", sans-serif;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: #00d4ff;
+
+            box-shadow:
+                0 0 0 4px rgba(0, 212, 255, 0.12);
+        }
+
+        textarea {
+            resize: none;
+            height: 160px;
+        }
+
+        /* BUTTON */
+
+        button.generate {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 16px;
+
+            border-radius: 16px;
+
+            background: linear-gradient(135deg,
+                    #6c63ff,
+                    #00d4ff);
+
+            color: white;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            font-size: 15px;
+        }
+
+        button.generate:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 30px rgba(0, 212, 255, 0.25);
+        }
+
+        /* RESULT */
+
+        .result {
+            background: #101010;
+
+            border: 1px solid rgba(255, 255, 255, 0.06);
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            line-height: 1.8;
+
+            color: #d7d7d7;
+
+            height: 570px;
+
+            overflow-y: auto;
+
+            white-space: pre-wrap;
+        }
+
+        .result::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .result::-webkit-scrollbar-thumb {
+            background: #00d4ff;
+            border-radius: 20px;
+        }
+
+        /* TAGS */
+
+        .tags {
+
+            display: flex;
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 15px;
+        }
+
+        .tag {
+
+            background: #232323;
+
+            border: 1px solid rgba(255, 255, 255, 0.05);
+
+            padding: 8px 14px;
+
+            border-radius: 999px;
+
+            font-size: 13px;
+
+            color: #bcbcbc;
+        }
+
+        /* RESPONSIVO */
+
+        @media(max-width:950px) {
+
+            .content.active {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 45px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+
+            <h1>DripAI</h1>
+
+            <p>
+                IA stylist que monta outfits reais com base no seu estilo 🔥
+            </p>
+
+        </header>
+
+        <!-- TABS -->
+
+        <div class="tabs">
+
+            <button class="tab active" data-tab="outfit">
+                Outfit
+            </button>
+
+            <button class="tab" data-tab="streetwear">
+                Streetwear
+            </button>
+
+            <button class="tab" data-tab="luxo">
+                Old Money
+            </button>
+
+        </div>
+
+        <!-- OUTFIT -->
+
+        <section class="content active" id="outfit">
+
+            <div class="card">
+
+                <h2>Monte seu Outfit</h2>
+
+                <div class="tags">
+
+                    <div class="tag">Nike</div>
+                    <div class="tag">Adidas</div>
+                    <div class="tag">Streetwear</div>
+                    <div class="tag">Old Money</div>
+
+                </div>
+
+                <input type="text" id="marca" placeholder="Marca favorita: Nike, Zara, Lacoste..." />
+
+                <select id="estilo">
+
+                    <option value="streetwear">
+                        Streetwear
+                    </option>
+
+                    <option value="old money">
+                        Old Money
+                    </option>
+
+                    <option value="minimalista">
+                        Minimalista
+                    </option>
+
+                    <option value="academia">
+                        Academia
+                    </option>
+
+                    <option value="casual">
+                        Casual
+                    </option>
+
+                </select>
+
+                <select id="ocasiao">
+
+                    <option value="rolê">
+                        Rolê
+                    </option>
+
+                    <option value="encontro">
+                        Encontro
+                    </option>
+
+                    <option value="academia">
+                        Academia
+                    </option>
+
+                    <option value="festa">
+                        Festa
+                    </option>
+
+                    <option value="formal">
+                        Formal
+                    </option>
+
+                </select>
+
+                <input type="number" id="orcamento" placeholder="Orçamento máximo" />
+
+                <select id="genero">
+
+                    <option value="masculino">
+                        Masculino
+                    </option>
+
+                    <option value="feminino">
+                        Feminino
+                    </option>
+
+                    <option value="unissex">
+                        Unissex
+                    </option>
+
+                </select>
+
+                <button class="generate" onclick="gerarOutfit()">
+                    Gerar Outfit 🔥
+                </button>
+
+            </div>
+
+            <div class="result" id="resultado">
+
+                Seu outfit aparecerá aqui 🔥
+
+                • Peças combinando
+                • Sugestões modernas
+                • Estilo personalizado
+                • Produtos reais
+                • Links originais
+
+            </div>
+
+        </section>
+
+        <!-- STREETWEAR -->
+
+        <section class="content" id="streetwear">
+
+            <div class="card">
+
+                <h2>Streetwear Generator</h2>
+
+                <p style="color:#bdbdbd; line-height:1.8;">
+                    Looks inspirados em:
+                    Travis Scott, Central Cee,
+                    Nike, Adidas, Corteiz e Yeezy.
+                </p>
+
+            </div>
+
+            <div class="result">
+
+                🔥 Tendências atuais:
+
+                • Oversized
+                • Cargo pants
+                • Tons escuros
+                • Sneakers chunky
+                • Acessórios minimalistas
+                • Layering moderno
+
+            </div>
+
+        </section>
+
+        <!-- OLD MONEY -->
+
+        <section class="content" id="luxo">
+
+            <div class="card">
+
+                <h2>Old Money</h2>
+
+                <p style="color:#bdbdbd; line-height:1.8;">
+                    Estilo elegante, sofisticado
+                    e minimalista.
+                </p>
+
+            </div>
+
+            <div class="result">
+
+                💎 Paleta recomendada:
+
+                • Bege
+                • Branco
+                • Preto
+                • Azul marinho
+                • Cinza claro
+
+                Peças principais:
+                • Camisa social
+                • Calça alfaiataria
+                • Mocassim
+                • Relógio clássico
+
+            </div>
+
+        </section>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+
+        // ====================================
+        // API
+        // ====================================
+
+        const API_URL =
+            "https://gerador-ia-vert.vercel.app";
+
+        // ====================================
+        // TABS
+        // ====================================
+
+        const tabs =
+            document.querySelectorAll(".tab");
+
+        const contents =
+            document.querySelectorAll(".content");
+
+        tabs.forEach(tab => {
+
+            tab.addEventListener("click", () => {
+
+                tabs.forEach(t =>
+                    t.classList.remove("active")
+                );
+
+                contents.forEach(c =>
+                    c.classList.remove("active")
+                );
+
+                tab.classList.add("active");
+
+                const target =
+                    tab.dataset.tab;
+
+                document
+                    .getElementById(target)
+                    .classList.add("active");
+
+            });
+
+        });
+
+        // ====================================
+        // GERAR OUTFIT
+        // ====================================
+
+        async function gerarOutfit() {
+
+            const marca =
+                document.getElementById("marca").value;
+
+            const estilo =
+                document.getElementById("estilo").value;
+
+            const ocasiao =
+                document.getElementById("ocasiao").value;
+
+            const orcamento =
+                document.getElementById("orcamento").value;
+
+            const genero =
+                document.getElementById("genero").value;
+
+            const resultado =
+                document.getElementById("resultado");
+
+            resultado.innerHTML =
+                "Gerando outfit... 🔥";
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/outfit`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            marca,
+                            estilo,
+                            ocasiao,
+                            orcamento,
+                            genero
+                        })
+                    }
+                );
+
+                const data =
+                    await response.json();
+
+                let html = `
+        <div style="
+            margin-bottom:25px;
+        ">
+            ${data.outfit}
+        </div>
+
+        <h3 style="
+            margin-bottom:20px;
+            color:#00d4ff;
+            font-size:22px;
+        ">
+            🔥 Produtos encontrados
+        </h3>
+        `;
+
+                data.produtos.forEach(produto => {
+
+                    html += `
+
+            <div style="
+                background:#171717;
+                border:1px solid rgba(255,255,255,0.06);
+                border-radius:18px;
+                padding:18px;
+                margin-bottom:18px;
+            ">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                ">
+
+                    <div>
+
+                        <h4 style="
+                            color:white;
+                            margin-bottom:8px;
+                            font-size:18px;
+                        ">
+                            ${produto.titulo}
+                        </h4>
+
+                        <p style="
+                            color:#9e9e9e;
+                            font-size:14px;
+                        ">
+                            Produto encontrado automaticamente
+                        </p>
+
+                    </div>
+
+                    <a 
+                        href="${produto.link}"
+                        target="_blank"
+                        style="
+                            background:linear-gradient(
+                                135deg,
+                                #6c63ff,
+                                #00d4ff
+                            );
+
+                            padding:12px 18px;
+
+                            border-radius:12px;
+
+                            color:white;
+
+                            text-decoration:none;
+
+                            font-weight:600;
+                        "
+                    >
+                        Ver Produto
+                    </a>
+
+                </div>
+
+            </div>
+
+            `;
+                });
+
+                resultado.innerHTML = html;
+
+            } catch (error) {
+
+                resultado.innerHTML =
+                    "Erro ao conectar com API.";
+
+                console.error(error);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
